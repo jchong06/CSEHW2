@@ -43,9 +43,9 @@ public class SongLinkedList {
                 Clip c = AudioSystem.getClip();
                 c.open(AIS);
                 c.start();
-                System.out.println("'" + name + "' by " + nodePtr.getData().getArtist() + " is now playing.");
             } catch (Exception ex) {
             }
+            System.out.println("\n'" + name + "' by " + nodePtr.getData().getArtist() + " is now playing.\n");
             return;
         }
         System.out.println("\n'" + name + "'" + " not found.\n");
