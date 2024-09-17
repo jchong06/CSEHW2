@@ -45,7 +45,7 @@ public class Song {
 
     public String toString(){
         String result = "";
-        for (int i = 0; i < 91; i++){
+        for (int i = 0; i < 87; i++){
             if (i == 0) {
                 result += name;
                 i +=  name.length();

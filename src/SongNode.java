@@ -33,29 +33,4 @@ public class SongNode {
         this.data = data;
     }
 
-    public String toString(){
-        String result = "";
-        for (int i = 0; i < 91; i++){
-            if (i == 0) {
-                result += getData().getName();
-                i += getData().getName().length();
-            }
-            else if (i == 26){
-                result += getData().getArtist();
-                i += getData().getArtist().length();
-            }
-            else if (i == 54) {
-                result += getData().getAlbum();
-                i += getData().getAlbum().length();
-            }
-            else if (i == 80) {
-                result += getData().getLength();
-                i += (getData().getLength() + "").length();
-            }
-            else {
-                result += (" ");
-            }
-        }
-        return result;
-    }
 }

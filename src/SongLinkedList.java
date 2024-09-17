@@ -28,14 +28,27 @@ public class SongLinkedList {
                     Clip c = AudioSystem.getClip();
                     c.open(AIS);
                     c.start();
+                    System.out.println("'" + name + "' by " + nodePtr.getData().getArtist() + " is now playing.");
                 }
                 catch (Exception ex) {}
                 break;
             }
             nodePtr = nodePtr.getNext();
         }
-
-        throw new IllegalArgumentException();
+        if (nodePtr.getData().getName().equals(name)) {
+            setCursor(nodePtr);
+            try {
+                AudioInputStream AIS = AudioSystem.getAudioInputStream(
+                        new File(name + ".wav"));
+                Clip c = AudioSystem.getClip();
+                c.open(AIS);
+                c.start();
+                System.out.println("'" + name + "' by " + nodePtr.getData().getArtist() + " is now playing.");
+            } catch (Exception ex) {
+            }
+            return;
+        }
+        System.out.println("\n'" + name + "'" + " not found.\n");
     }
 
     public void cursorForwards(){
@@ -58,15 +71,11 @@ public class SongLinkedList {
 
     public void cursorBackwards(){
         cursor = cursor.getPrev();
-        cursor.setNext(cursor.getNext());
-        cursor.setPrev(cursor.getPrev());
     }
 
     public void cursorBack(){
         if (cursor.getPrev() != null){
             cursor = cursor.getPrev();
-            cursor.setNext(cursor.getNext());
-            cursor.setPrev(cursor.getPrev());
             System.out.println("\nCursor moved to the previous song.\n");
         }
         else{
@@ -89,6 +98,14 @@ public class SongLinkedList {
             cursorForwards();
             song.setNext(temp);
             cursor.setNext(temp);
+            if (temp != null){
+                cursorForwards();
+                cursor.setPrev(song);
+                cursorBackwards();
+            }
+            else{
+                setTail(cursor);
+            }
             size ++;
         }
 
@@ -112,14 +129,19 @@ public class SongLinkedList {
             else{
                 cursorForwards();
             }
-            if ((cursor.getPrev() == null) && (!done)){
+            if ((cursor.getPrev().getPrev() == null) && (!done)){
                 cursor.setPrev(null);
                 setHead(cursor);
                 done = true;
             }
             if (!done){
-                cursor.getPrev().setNext(cursor.getNext());
-                setCursor(cursor.getNext());
+                cursorBackwards();
+                SongNode temp = cursor.getNext();
+                cursorBackwards();
+                cursor.setNext(temp);
+                temp = cursor;
+                cursorForwards();
+                cursor.setPrev(temp);
             }
         }
         size--;
@@ -143,22 +165,24 @@ public class SongLinkedList {
     }
 
     public void deleteAll(){
-        head.setData(null);
-        head.setNext(null);
-        head.setPrev(null);
-        cursor = head;
+        setCursor(null);
+        head = cursor;
         tail = cursor;
+        size = 0;
     }
 
     @Override
     public String toString() {
         String result = "\nPlaylist:\n" +
-                "Song                   | Artist                   | Album                  | Length (s)\n" +
+                "Song                   | Artist                   | Album                 | Length (s)\n" +
                 "-------------------------------------------------------------------------------------------";
         SongNode temp = cursor;
         cursor = head;
         for (int i = 0; i < size; i++){
             result += "\n" + cursor.getData().toString();
+            if (cursor == temp){
+                result += "<-";
+            }
             if (i < size - 1){
                 cursorForwards();
             }
@@ -194,7 +218,14 @@ public class SongLinkedList {
     }
 
     public void setCursor(SongNode cursor) {
-        this.cursor = cursor;
+        if (cursor == null){
+            this.cursor.setData(null);
+            this.cursor.setNext(null);
+            this.cursor.setPrev(null);
+        }
+        else{
+            this.cursor = cursor;
+        }
     }
 
     public int getSize() {

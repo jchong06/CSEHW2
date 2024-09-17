@@ -30,7 +30,7 @@ public class Player {
                 String length = input.nextLine();
                 Song s = new Song(name, artist, album, Integer.parseInt(length));
                 songs.insertAfterCursor(s);
-                System.out.println("\n'" + name + "'" + " by " + artist +  "is added to your playlist.\n");
+                System.out.println("\n'" + name + "'" + " by " + artist +  " is added to your playlist.\n");
             }
             if (option.equals("F")){
                 songs.cursorFor();
@@ -39,6 +39,26 @@ public class Player {
                 songs.cursorBack();
             if (option.equals("P")){
                 System.out.println(songs);
+            }
+            if (option.equals("T")) {
+                System.out.println("\nYour playlist contains " + songs.getSize() + " songs.\n");
+            }
+            if (option.equals("R")) {
+                if (songs.getCursor() != null){
+                    Song removed = songs.removeCursor();
+                    String songName = removed.getName();
+                    String a = removed.getArtist();
+                    System.out.println("\n'" + songName + "' by " + a + " was removed from the playlist.\n");
+                }
+            }
+            if (option.equals("L")){
+                System.out.print("Enter name of song to play: ");
+                String name = input.nextLine();
+                songs.play(name);
+            }
+            if (option.equals("C")){
+                songs.deleteAll();
+                System.out.println("\nPlaylist cleared.\n");
             }
             System.out.println(menu);
             System.out.print("Please enter a command: ");
