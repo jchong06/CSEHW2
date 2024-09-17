@@ -150,6 +150,7 @@ public class SongLinkedList {
 
     public Song random(){
         if (cursor != null){
+            SongNode temp = cursor;
             cursor = head;
             for (int i = 0; i < randomHelper(); i++){
                 cursorForwards();
@@ -162,7 +163,9 @@ public class SongLinkedList {
                 c.start();
             }
             catch (Exception ex) {}
-            return cursor.getData();
+            Song s = cursor.getData();
+            cursor = temp;
+            return s;
         }
         return null;
     }
