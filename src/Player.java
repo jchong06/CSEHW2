@@ -68,6 +68,15 @@ public class Player {
                 songs.deleteAll();
                 System.out.println("\nPlaylist cleared.\n");
             }
+            if (option.equals("Z")){
+                Song s = songs.random();
+                if (s == null){
+                    System.out.println("\nYour playlist is empty\n");
+                }
+                else {
+                    System.out.println("\nPlaying a random song\n");
+                }
+            }
             System.out.println(menu);
             System.out.print("Please enter a command: ");
             option = input.nextLine().toUpperCase();

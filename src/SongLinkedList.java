@@ -149,19 +149,22 @@ public class SongLinkedList {
     }
 
     public Song random(){
-        cursor = head;
-        for (int i = 0; i < randomHelper(); i++){
-            cursorForwards();
+        if (cursor != null){
+            cursor = head;
+            for (int i = 0; i < randomHelper(); i++){
+                cursorForwards();
+            }
+            try {
+                AudioInputStream AIS = AudioSystem.getAudioInputStream(
+                        new File(cursor.getData().getName() + ".wav"));
+                Clip c = AudioSystem.getClip();
+                c.open(AIS);
+                c.start();
+            }
+            catch (Exception ex) {}
+            return cursor.getData();
         }
-        try {
-            AudioInputStream AIS = AudioSystem.getAudioInputStream(
-                    new File(cursor.getData().getName() + ".wav"));
-            Clip c = AudioSystem.getClip();
-            c.open(AIS);
-            c.start();
-        }
-        catch (Exception ex) {}
-        return cursor.getData();
+        return null;
     }
 
     public void deleteAll(){
@@ -193,7 +196,7 @@ public class SongLinkedList {
     }
 
     public int randomHelper(){
-        return (int) (Math.random() * size) + 1;
+        return (int) (Math.random() * size);
     }
 
 
