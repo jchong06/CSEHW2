@@ -41,7 +41,12 @@ public class Player {
                 System.out.println(songs);
             }
             if (option.equals("T")) {
-                System.out.println("\nYour playlist contains " + songs.getSize() + " songs.\n");
+                if (songs.getSize() == 0){
+                    System.out.println("\nYour playlist is empty\n");
+                }
+                else {
+                    System.out.println("\nYour playlist contains " + songs.getSize() + " songs.\n");
+                }
             }
             if (option.equals("R")) {
                 if (songs.getCursor() != null){
@@ -49,6 +54,9 @@ public class Player {
                     String songName = removed.getName();
                     String a = removed.getArtist();
                     System.out.println("\n'" + songName + "' by " + a + " was removed from the playlist.\n");
+                }
+                else{
+                    System.out.println("\nYour playlist is empty\n");
                 }
             }
             if (option.equals("L")){
