@@ -1,5 +1,46 @@
 import java.util.Scanner;
-
+/**
+ * @author Justin Chong
+ * Email: justin.chong@stonybrook.edu
+ * Student ID: 116143020
+ * Recitation Number: CSE 214 R03
+ * TA: Veronica Oreshko
+ */
+/**
+ * The Player class provides an interactive menu-driven application that allows
+ * users to manage a playlist of songs. The playlist is implemented as a linked
+ * list, enabling users to perform various actions such as adding, removing,
+ * navigating, and playing songs.
+ *
+ * <p>
+ * The class contains a main method that presents a menu to the user, offering
+ * the following options:
+ * <ul>
+ * <li>Add a song to the playlist</li>
+ * <li>Move to the next song in the playlist</li>
+ * <li>Move to the previous song in the playlist</li>
+ * <li>Remove a song from the playlist</li>
+ * <li>Play a song</li>
+ * <li>Clear the playlist</li>
+ * <li>Shuffle the playlist</li>
+ * <li>Play a random song from the playlist</li>
+ * <li>Print the current playlist</li>
+ * <li>Get the total number of songs in the playlist</li>
+ * <li>Exit the playlist</li>
+ * </ul>
+ *
+ * <p>
+ * The program runs in a loop, repeatedly displaying the menu and executing the
+ * user's chosen command until the user opts to exit the application by selecting
+ * the 'Q' option.
+ * </p>
+ *
+ * <p>
+ * This class interacts with the SongLinkedList class for playlist management and
+ * the Song class for storing song details.
+ * </p>
+ *
+*/
 public class Player {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -19,7 +60,7 @@ public class Player {
         System.out.print("Please enter a command: ");
         String option = input.nextLine().toUpperCase();
         while (!option.equals("Q")) {
-            if (option.equals("A")){
+            if (option.equals("A")) {
                 System.out.print("Enter song title: ");
                 String name = input.nextLine();
                 System.out.print("Enter artist(s) of the song: ");
@@ -30,51 +71,57 @@ public class Player {
                 String length = input.nextLine();
                 Song s = new Song(name, artist, album, Integer.parseInt(length));
                 songs.insertAfterCursor(s);
-                System.out.println("\n'" + name + "'" + " by " + artist +  " is added to your playlist.\n");
+                System.out.println("\n'" + name + "'" + " by " + artist + " is added to your playlist.\n");
             }
-            if (option.equals("F")){
+            if (option.equals("F")) {
                 songs.cursorFor();
             }
             if (option.equals("B"))
                 songs.cursorBack();
-            if (option.equals("P")){
+            if (option.equals("P")) {
                 System.out.println(songs);
             }
             if (option.equals("T")) {
-                if (songs.getSize() == 0){
+                if (songs.getSize() == 0) {
                     System.out.println("\nYour playlist is empty\n");
-                }
-                else {
+                } else {
                     System.out.println("\nYour playlist contains " + songs.getSize() + " songs.\n");
                 }
             }
             if (option.equals("R")) {
-                if (songs.getCursor() != null){
+                if (songs.getCursor() != null) {
                     Song removed = songs.removeCursor();
                     String songName = removed.getName();
                     String a = removed.getArtist();
                     System.out.println("\n'" + songName + "' by " + a + " was removed from the playlist.\n");
-                }
-                else{
+                } else {
                     System.out.println("\nYour playlist is empty\n");
                 }
             }
-            if (option.equals("L")){
-                System.out.print("Enter name of song to play: ");
-                String name = input.nextLine();
-                songs.play(name);
+            if (option.equals("L")) {
+                if (songs.getCursor() != null) {
+                    System.out.print("Enter name of song to play: ");
+                    String name = input.nextLine();
+                    songs.play(name);
+                } else {
+                    System.out.println("\nYour playlist is empty\n");
+                }
             }
-            if (option.equals("C")){
+            if (option.equals("C")) {
                 songs.deleteAll();
                 System.out.println("\nPlaylist cleared.\n");
             }
-            if (option.equals("Z")){
+            if (option.equals("S")) {
+                songs.shuffle();
+                System.out.println("\nPlaylist shuffled.\n");
+            }
+            if (option.equals("Z")) {
                 Song s = songs.random();
-                if (s == null){
+                if (s == null) {
                     System.out.println("\nYour playlist is empty\n");
-                }
-                else {
+                } else {
                     System.out.println("\nPlaying a random song\n");
+                    System.out.println("\n'" + s.getName() + "' by " + s.getArtist() + " is now playing\n");
                 }
             }
             System.out.println(menu);
