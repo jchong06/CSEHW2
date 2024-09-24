@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Email: justin.chong@stonybrook.edu
  * Student ID: 116143020
  * Recitation Number: CSE 214 R03
- * TA: Veronica Oreshko
+ * TA: Kevin Zheng
  */
 /**
  * The Player class provides an interactive menu-driven application that allows

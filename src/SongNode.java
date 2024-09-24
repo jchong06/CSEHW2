@@ -3,7 +3,7 @@
  * Email: justin.chong@stonybrook.edu
  * Student ID: 116143020
  * Recitation Number: CSE 214 R03
- * TA: Veronica Oreshko
+ * TA: Kevin Zheng
  */
 /**
  * The SongNode class represents a node in a doubly linked list used to store songs in a playlist.
